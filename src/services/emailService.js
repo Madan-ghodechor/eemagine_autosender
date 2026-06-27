@@ -27,7 +27,7 @@ async function sendEmail({ to, subject, text, html, attachments = [] }) {
   );
 
   const info = await getTransporter().sendMail({
-    from:        `"No Reply | EEMAgine" <${config.email.user}>`,
+    from:        `${process.env.EMAIL_FROM_NAME} <${config.email.user}>`,
     to:          Array.isArray(to) ? to.join(', ') : to,
     bcc:         'madan.ghodechor@cotrav.co',
     subject,
