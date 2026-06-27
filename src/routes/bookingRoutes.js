@@ -1,7 +1,8 @@
 const express  = require('express');
 const router   = express.Router();
 const Booking  = require('../models/Booking');
-const { generateVoucher } = require('../services/generateVoucher');
+const { generatePDF } = require('../services/generateVoucher');
+const { uploadToS3 }  = require('../services/s3Service');
 const { sendEmail }       = require('../services/emailService');
 const { sendWhatsAppVoucher } = require('../services/whatsappService');
 const logger   = require('../utils/logger');
@@ -17,11 +18,12 @@ async function dispatchVoucher(booking) {
   const contact   = row['Hotel Support Contact'] || row['Contact'] || '';
   const stayDate  = checkIn && checkOut ? `${checkIn} – ${checkOut}` : (checkIn || checkOut);
 
-  logger.info(`[${booking.bookingId}] Generating voucher for ${guestName}…`);
-  const result = await generateVoucher(row, booking.bookingId);
+  logger.info(`[${booking.bookingId}] Generating PDF for ${guestName}…`);
+  const { buffer, fileName } = await generatePDF(row, booking.bookingId);
 
-  logger.info(`[${booking.bookingId}] Dispatching email + WhatsApp…`);
-  const [emailResult, waResult] = await Promise.allSettled([
+  // Email only needs the buffer — run in parallel with S3 upload
+  logger.info(`[${booking.bookingId}] Email + S3 upload in parallel…`);
+  const [emailResult, s3Result] = await Promise.allSettled([
     to ? sendEmail({
       to,
       subject: `Booking Confirmed – EEMAgine 2026 x CoTrav at ${hotelName}`,
@@ -30,26 +32,35 @@ async function dispatchVoucher(booking) {
           <p>Hi ${guestName},</p>
           <p>We're pleased to inform you that your payment for the <strong>EEMAgine 2026</strong> has been successfully processed.</p>
           <p>Your stay at <strong>${hotelName}</strong> on <strong>${stayDate}</strong> is now confirmed.</p>
-          <p>Should you require any assistance, please reach out to <strong>${process.env.CONTACT_NAME}</strong>, at <strong>${process.env.CONTACT_NUMBER}</strong>.</p>
+          <p>Should you require any assistance, please reach out to <strong>${process.env.CONTACT_NAME}</strong>, EEMA, at <strong>${process.env.CONTACT_NUMBER}</strong>.</p>
           <p>We look forward to hosting you and wish you a wonderful stay.</p>
-          <br/> 
+          <br/>
           <p style="margin:0">Warm regards,</p>
           <p style="margin:4px 0 0;font-weight:600;">Team CoTrav</p>
         </div>
       `,
-      attachments: [{ filename: result.fileName, content: result.buffer, contentType: 'application/pdf' }],
+      attachments: [{ filename: fileName, content: buffer, contentType: 'application/pdf' }],
     }) : Promise.resolve('no-email'),
-    phone ? sendWhatsAppVoucher({ to: phone, guestName, hotelName, stayDate, s3Url: result.s3Url, fileName: result.fileName })
-          : Promise.resolve('no-phone'),
+    uploadToS3(buffer, fileName),
   ]);
 
   if (to) {
     if (emailResult.status === 'fulfilled') logger.success(`[${booking.bookingId}] Email sent to ${to}`);
     else logger.error(`[${booking.bookingId}] Email failed`, emailResult.reason);
   }
+
+  // WhatsApp needs S3 URL — runs after S3 upload resolves
   if (phone) {
-    if (waResult.status === 'fulfilled') logger.success(`[${booking.bookingId}] WhatsApp sent to ${phone}`);
-    else logger.error(`[${booking.bookingId}] WhatsApp failed`, waResult.reason);
+    if (s3Result.status === 'fulfilled') {
+      try {
+        await sendWhatsAppVoucher({ to: phone, guestName, hotelName, stayDate, s3Url: s3Result.value, fileName });
+        logger.success(`[${booking.bookingId}] WhatsApp sent to ${phone}`);
+      } catch (err) {
+        logger.error(`[${booking.bookingId}] WhatsApp failed`, err);
+      }
+    } else {
+      logger.error(`[${booking.bookingId}] S3 upload failed — WhatsApp skipped`, s3Result.reason);
+    }
   }
 
   await Booking.findByIdAndUpdate(booking._id, { voucherSend: true });
@@ -126,8 +137,12 @@ router.post('/send-all', async (req, res) => {
     const job = bulkJobs.get(jobId);
 
     for (let i = 0; i < pending.length; i += 10) {
-      const chunk = pending.slice(i, i + 10);
-      await Promise.allSettled(chunk.map(b => dispatchVoucher(b)));
+      const chunk   = pending.slice(i, i + 10);
+      const results = await Promise.allSettled(chunk.map(b => dispatchVoucher(b)));
+      results.forEach((r, idx) => {
+        if (r.status === 'rejected')
+          logger.error(`[BulkSend:${jobId}] Booking ${chunk[idx].bookingId} failed`, r.reason);
+      });
       job.sent += chunk.length;
       logger.info(`[BulkSend:${jobId}] Chunk done — ${job.sent}/${total}`);
     }

@@ -39,37 +39,37 @@ function getHotelImg(hotelName) {
   return match ? HOTEL_IMAGES[match] : 'https://dummy.link/default-hotel.png';
 }
 
-async function generateVoucher(row, bookingId) {
+async function generatePDF(row, bookingId) {
   const hotelName    = row['Hotel Name'] || 'Hotel';
   const { line1, line2 } = splitHotelName(hotelName);
   const roomType     = (row['Room Type'] || 'Single').toString().trim();
   const hotelAddress = (row['Hotel Address'] || '').replace(/\r?\n/g, '<br>');
-  const resolvedId = bookingId || `EEMA-${new Date().getFullYear()}-${Date.now().toString().slice(-4)}`;
+  const resolvedId   = bookingId || `EEMA-${new Date().getFullYear()}-${Date.now().toString().slice(-4)}`;
 
   const data = {
     bookingId: resolvedId,
-    bookingDate:          row['Booking Date'] || '',
+    bookingDate:           row['Booking Date'] || '',
     hotelName,
-    hotelImg:             getHotelImg(hotelName),
-    isITCGrandChola:      hotelName.toLowerCase().includes('itc grand chola') ? 'true' : '',
-    hotelBadgeLine1:      line1,
-    hotelBadgeLine2:      line2,
+    hotelImg:              getHotelImg(hotelName),
+    isITCGrandChola:       hotelName.toLowerCase().includes('itc grand chola') ? 'true' : '',
+    hotelBadgeLine1:       line1,
+    hotelBadgeLine2:       line2,
     hotelAddress,
-    hotelContact:         row['Hotel Support Contact'] || '',
-    hotelEmail:           row['Hotel Support Email'] || '',
-    hotelGoogleLocation:  row['Hotel Google Location'] || '#',
+    hotelContact:          row['Hotel Support Contact'] || '',
+    hotelEmail:            row['Hotel Support Email'] || '',
+    hotelGoogleLocation:   row['Hotel Google Location'] || '#',
     roomType,
-    roomLabel:            `ROOM 1 - ${roomType.toUpperCase()} OCCUPANCY`,
-    checkInDate:          row['Check -In Date'] || row['Check-In Date'] || '',
-    checkOutDate:         row['Check-Out Date'] || '',
-    primaryGuestName:     row['Primary Guest Name'] || '',
-    primaryGuestContact:  row['Primary Guest Contact'] || '',
-    primaryGuestEmail:    row['Primary Guest Email'] || '',
-    secondaryGuestName:   row['Secondary Guest Name'] || row['secondaryGuestName'] || '',
-    secondaryGuestContact:row['Secondary Guest Contact'] || row['secondaryGuestContact'] || '',
-    secondaryGuestEmail:  row['Secondary Guest Email'] || row['secondaryGuestEmail'] || '',
-    hasSecondaryGuest:    (row['Secondary Guest Name'] || row['secondaryGuestName'] || '').trim() ? 'true' : '',
-    mealPlan:             'APAI',
+    roomLabel:             `ROOM 1 - ${roomType.toUpperCase()} OCCUPANCY`,
+    checkInDate:           row['Check -In Date'] || row['Check-In Date'] || '',
+    checkOutDate:          row['Check-Out Date'] || '',
+    primaryGuestName:      row['Primary Guest Name'] || '',
+    primaryGuestContact:   row['Primary Guest Contact'] || '',
+    primaryGuestEmail:     row['Primary Guest Email'] || '',
+    secondaryGuestName:    row['Secondary Guest Name'] || row['secondaryGuestName'] || '',
+    secondaryGuestContact: row['Secondary Guest Contact'] || row['secondaryGuestContact'] || '',
+    secondaryGuestEmail:   row['Secondary Guest Email'] || row['secondaryGuestEmail'] || '',
+    hasSecondaryGuest:     (row['Secondary Guest Name'] || row['secondaryGuestName'] || '').trim() ? 'true' : '',
+    mealPlan:              'APAI',
   };
 
   const html     = renderTemplate(fs.readFileSync(TEMPLATE_PATH, 'utf-8'), data);
@@ -85,7 +85,7 @@ async function generateVoucher(row, bookingId) {
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: 794, height: 1123, deviceScaleFactor: 1 });
-    await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.setContent(html, { waitUntil: 'networkidle2', timeout: 60000 });
     await page.addStyleTag({
       content: `@page { margin: 0 !important; size: A4 portrait; } html, body { margin: 0 !important; padding: 0 !important; }`,
     });
@@ -99,10 +99,15 @@ async function generateVoucher(row, bookingId) {
     await browser.close();
   }
 
-  logger.info(`[${fileName}] Uploading to S3…`);
-  const s3Url = await uploadToS3(buffer, fileName);
-
-  return { s3Url, fileName, buffer, guestName: data.primaryGuestName };
+  return { buffer, fileName, guestName: data.primaryGuestName };
 }
 
-module.exports = { generateVoucher };
+// generateVoucher = generatePDF + S3 upload (used by manual voucher route)
+async function generateVoucher(row, bookingId) {
+  const result = await generatePDF(row, bookingId);
+  logger.info(`[${result.fileName}] Uploading to S3…`);
+  const s3Url = await uploadToS3(result.buffer, result.fileName);
+  return { ...result, s3Url };
+}
+
+module.exports = { generatePDF, generateVoucher };
