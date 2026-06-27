@@ -1,0 +1,238 @@
+<%- include('partials/head', { title: 'Generate Hotel Voucher PDF' }) %>
+<%- include('partials/navbar', { page: 'generate-pdf' }) %>
+
+<style>
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 9px 12px; border: 1px solid #dde1ea; border-radius: 6px;
+    font-size: 14px; background: #fff; outline: none; transition: border-color .15s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
+  .form-group textarea { resize: vertical; min-height: 72px; }
+  .section-heading {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--primary); border-bottom: 1px solid #e8eaf0; padding-bottom: 8px;
+    margin: 8px 0 4px;
+  }
+  #downloadBtn { min-width: 180px; position: relative; }
+  #downloadBtn.loading { opacity: .7; pointer-events: none; }
+  #statusMsg { font-size: 13px; margin-top: 10px; min-height: 20px; }
+  .status-ok   { color: #27ae60; }
+  .status-err  { color: #c0392b; }
+</style>
+
+<div class="container" style="max-width:800px">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px;">
+    <h1 class="page-title">Generate Hotel Voucher PDF</h1>
+    <a href="/" class="btn btn-outline">← Upload Excel instead</a>
+  </div>
+  <p class="page-sub">Fill in the guest and hotel details, then click <strong>Download PDF</strong>.</p>
+
+  <form id="voucherForm" class="card" style="padding:28px" novalidate>
+
+    <div class="section-heading">Booking Info</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Booking Date</label>
+        <input type="date" name="Booking Date" id="bookingDate" />
+      </div>
+    </div>
+
+    <div class="section-heading" style="margin-top:20px">Hotel Details</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Hotel Name <span style="color:#c0392b">*</span></label>
+        <input type="text" name="Hotel Name" placeholder="e.g. The Grand Hyatt" required />
+      </div>
+      <div class="form-group full">
+        <label>Hotel Address</label>
+        <textarea name="Hotel Address" placeholder="Street, City, State, PIN"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Support Contact</label>
+        <input type="text" name="Hotel Support Contact" placeholder="+91 98765 43210" />
+      </div>
+      <div class="form-group">
+        <label>Support Email</label>
+        <input type="email" name="Hotel Support Email" placeholder="support@hotel.com" />
+      </div>
+      <div class="form-group full">
+        <label>Google Maps Link</label>
+        <input type="url" name="Hotel Google Location" placeholder="https://maps.google.com/..." />
+      </div>
+    </div>
+
+    <div class="section-heading" style="margin-top:20px">Stay Details</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Check-In Date <span style="color:#c0392b">*</span></label>
+        <input type="date" name="Check -In Date" required />
+      </div>
+      <div class="form-group">
+        <label>Check-Out Date <span style="color:#c0392b">*</span></label>
+        <input type="date" name="Check-Out Date" required />
+      </div>
+      <div class="form-group">
+        <label>Room Type <span style="color:#c0392b">*</span></label>
+        <select name="Room Type" required>
+          <option value="">— Select —</option>
+          <option value="Single">Single</option>
+          <option value="Double">Double</option>
+          <option value="Twin">Twin</option>
+          <option value="Triple">Triple</option>
+          <option value="Suite">Suite</option>
+          <option value="Deluxe">Deluxe</option>
+          <option value="Super Deluxe">Super Deluxe</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-heading" style="margin-top:20px">Primary Guest</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Full Name <span style="color:#c0392b">*</span></label>
+        <input type="text" name="Primary Guest Name" placeholder="John Doe" required />
+      </div>
+      <div class="form-group">
+        <label>Contact Number</label>
+        <input type="text" name="Primary Guest Contact" placeholder="+91 99999 00000" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="Primary Guest Email" placeholder="guest@email.com" />
+      </div>
+    </div>
+
+    <div class="section-heading" style="margin-top:20px">Secondary Guest <span style="font-size:11px;color:var(--muted);text-transform:none;letter-spacing:0">(optional)</span></div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Full Name</label>
+        <input type="text" name="Secondary Guest Name" placeholder="Jane Doe" />
+      </div>
+      <div class="form-group">
+        <label>Contact Number</label>
+        <input type="text" name="Secondary Guest Contact" placeholder="+91 99999 00000" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="Secondary Guest Email" placeholder="guest2@email.com" />
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap;">
+      <button type="submit" class="btn btn-primary" id="downloadBtn">⬇ Download PDF</button>
+      <button type="button" class="btn btn-outline" id="resetBtn">Reset</button>
+      <span id="statusMsg"></span>
+    </div>
+
+  </form>
+</div>
+
+<script>
+  const PREFILL = {
+    "Booking Date":            "20 Jun 2026",
+    "Hotel Name":              "ITC Grand Chola",
+    "Hotel Address":           "63, Mount Road, Guindy, Chennai",
+    "Hotel Support Contact":   "+91-44-2220-0000",
+    "Hotel Support Email":     "reservations@itchotels.com",
+    "Hotel Google Location":   "https://maps.app.goo.gl/xyz",
+    "Check -In Date":          "25 Jun 2026",
+    "Check-Out Date":          "27 Jun 2026",
+    "Room Type":               "Double",
+    "Primary Guest Name":      "Madan Ghodechor",
+    "Primary Guest Contact":   "9876543210",
+    "Primary Guest Email":     "madan@example.com",
+    "Secondary Guest Name":    "Basant Bhagat",
+    "Secondary Guest Contact": "9294884989",
+    "Secondary Guest Email":   "basant.bhagat@cotrav.co",
+  };
+
+  // Convert "25 Jun 2026" → "2026-06-25" for date inputs
+  function toInputDate(str) {
+    const d = new Date(str);
+    if (isNaN(d)) return '';
+    return d.toISOString().slice(0, 10);
+  }
+
+  function applyPrefill(data) {
+    Object.entries(data).forEach(([key, val]) => {
+      const el = document.querySelector(`[name="${CSS.escape(key)}"]`);
+      if (!el) return;
+      if (el.type === 'date') {
+        el.value = toInputDate(val);
+      } else if (el.tagName === 'SELECT') {
+        el.value = val;
+      } else {
+        el.value = val;
+      }
+    });
+  }
+
+  applyPrefill(PREFILL);
+
+  const form = document.getElementById('voucherForm');
+  const btn  = document.getElementById('downloadBtn');
+  const msg  = document.getElementById('statusMsg');
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    form.reset();
+    applyPrefill(PREFILL);
+    msg.textContent = '';
+    msg.className = '';
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = '';
+    msg.className = '';
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const data = {};
+    new FormData(form).forEach((val, key) => { if (val) data[key] = val; });
+
+    btn.classList.add('loading');
+    btn.textContent = '⏳ Generating…';
+
+    try {
+      const res = await fetch('/vouchers/hotel/generate-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ row: data }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: 'Server error' }));
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
+
+      const blob = await res.blob();
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      const guestName = (data['Primary Guest Name'] || 'voucher').replace(/\s+/g, '_').toLowerCase();
+      a.href     = url;
+      a.download = `hotel_voucher_${guestName}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+      msg.textContent = '✓ PDF downloaded successfully!';
+      msg.className = 'status-ok';
+    } catch (err) {
+      msg.textContent = `✗ ${err.message}`;
+      msg.className = 'status-err';
+    } finally {
+      btn.classList.remove('loading');
+      btn.textContent = '⬇ Download PDF';
+    }
+  });
+</script>
+
+<%- include('partials/footer') %>

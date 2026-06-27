@@ -1,0 +1,65 @@
+<%- include('partials/head', { title: 'Hotel Vouchers Generated' }) %>
+<%- include('partials/navbar', { page: 'vouchers' }) %>
+
+<div class="container">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px;">
+    <h1 class="page-title">Hotel Vouchers</h1>
+    <a href="/" class="btn btn-outline">← Upload another</a>
+  </div>
+  <p class="page-sub">
+    Generated <strong><%= results.length %></strong> voucher(s)
+    &nbsp;·&nbsp; <span style="color:var(--muted)"><%= new Date(generatedAt).toLocaleString('en-IN') %></span>
+  </p>
+
+  <% const ok = results.filter(r => r.ok); const failed = results.filter(r => !r.ok); %>
+
+  <% if (failed.length) { %>
+  <div class="alert alert-error" style="margin-bottom:16px;">
+    ⚠ <strong><%= failed.length %></strong> voucher(s) failed to generate:
+    <% failed.forEach(f => { %><br>&nbsp;&nbsp;• <%= f.guestName %> — <%= f.error %><% }) %>
+  </div>
+  <% } %>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:40px">#</th>
+            <th>Guest Name</th>
+            <th>Hotel</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Room Type</th>
+            <th>Booking ID</th>
+            <th style="width:110px">Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% results.forEach((r, i) => { %>
+          <tr>
+            <td style="color:var(--muted)"><%= i + 1 %></td>
+            <% if (r.ok) { %>
+            <td><strong><%= r.data.primaryGuestName %></strong></td>
+            <td><%= r.data.hotelName %></td>
+            <td><%= r.data.checkInDate %></td>
+            <td><%= r.data.checkOutDate %></td>
+            <td><%= r.data.roomType %></td>
+            <td style="font-size:12px;color:var(--muted)"><%= r.data.bookingId %></td>
+            <td>
+              <a href="/vouchers/hotel/download/<%= encodeURIComponent(r.fileName) %>"
+                 class="btn btn-primary btn-sm" target="_blank">⬇ PDF</a>
+            </td>
+            <% } else { %>
+            <td colspan="6" style="color:#c0392b"><%= r.guestName %> — <%= r.error %></td>
+            <td><span class="badge" style="background:#fee;color:#c0392b;">Failed</span></td>
+            <% } %>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

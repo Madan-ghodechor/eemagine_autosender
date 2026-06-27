@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hotel Confirmation Voucher</title>
+  <style>
+    :root {
+      --navy: #0b1640;
+      --navy2: #0d1c4a;
+      --gold: #c8a24c;
+      --gold-d: #b08828;
+      --orange: #ea6a1c;
+      --orange2: #ee7a1e;
+      --ink: #1c2030;
+      --grey-line: #d9dce4;
+      --grey-box: #eef0f5;
+      --txt: #2a2f3d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #525659;
+      font-family: 'Poppins', sans-serif;
+      color: var(--txt);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      border: 1px solid black;
+      width: 794px;
+      min-height: 1123px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, .4);
+    }
+
+    /* .pad{padding:34px 46px 26px;} */
+
+    /* HEADER */
+    .top-logos {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .top-logos img {
+      width: 100%;
+      display: block;
+    }
+
+    /* TITLE */
+    .voucher-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 37px;
+      color: var(--navy);
+      letter-spacing: .3px;
+      margin: 30px 0 8px;
+      white-space: nowrap;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 6px auto 22px;
+      width: 60%;
+    }
+
+    .divider img {
+      width: 100%;
+      display: block;
+    }
+
+    /* BOOKING */
+    .stage {
+      position: relative;
+    }
+
+    .hotel-bg {
+      position: absolute;
+      right: -45px;
+      top: -70px;
+      width: 320px;
+      opacity: .55;
+      -webkit-mask-image: linear-gradient(to left, #000 55%, transparent);
+      mask-image: linear-gradient(to left, #000 55%, transparent);
+      pointer-events: none;
+    }
+
+    .booking-wrap {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .booking-id {
+      display: inline-block;
+      background: var(--navy);
+      color: #fff;
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 13px 46px;
+      font-size: 22px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(11, 22, 64, .25);
+    }
+
+    .booked-on {
+      margin-top: 16px;
+      font-size: 17px;
+      color: #2a2f3d;
+      font-weight: 400;
+    }
+
+    .booked-on b {
+      font-weight: 700;
+    }
+
+    /* HOTEL BLOCK */
+    .hotel-block {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      margin-top: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hotel-badge {
+      flex: 0 0 auto;
+      width: 150px;
+      height: 182px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hotel-badge img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+    }
+
+    .hotel-mid {
+      flex: 1;
+    }
+
+    .hotel-name {
+      font-size: 33px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+
+    .hrow {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      margin-bottom: 11px;
+      font-size: 14px;
+      color: #2c3140;
+      line-height: 1.4;
+    }
+
+    .hrow img {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      margin-top: 1px;
+    }
+
+    .hotel-geo {
+      flex: 0 0 auto;
+      text-align: center;
+      width: 120px;
+    }
+
+    .hotel-geo .pin {
+      width: 72px;
+      margin: 0 auto 6px;
+      display: block;
+    }
+
+    .hotel-geo span {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2a2f3d;
+    }
+
+    /* EEMA MEMBER */
+    .member {
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      background: #F4F3F7;
+      border: 1px solid #e3e6ee;
+      border-radius: 10px;
+      padding: 10px 10px;
+    }
+
+    .badge-circle img {
+      width: 48px;
+      display: block;
+    }
+
+    .member-body {
+      flex: 1;
+    }
+
+    .member-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--ink);
+      letter-spacing: .5px;
+      margin-bottom: 7px;
+    }
+
+    .member-cols {
+      display: flex;
+      align-items: center;
+    }
+
+    .member-cols .col {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #2c3140;
+    }
+
+    .member-cols .col img {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    .member-cols .sep {
+      width: 1px;
+      height: 26px;
+      background: #c7ccda;
+      margin: 0 18px;
+    }
+
+    /* ROOM */
+    .room {
+      margin-top: 34px;
+      display: flex;
+      gap: 22px;
+      box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+      border-radius: 10px;
+      padding: 10px 10px;
+    }
+
+    .room-num {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .room-num img {
+      width: 100%;
+      display: block;
+    }
+
+    .room-body {
+      flex: 1;
+    }
+
+    .room-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--ink);
+      letter-spacing: .5px;
+      margin-bottom: 14px;
+    }
+
+    .room-line {
+      display: flex;
+      border-bottom: 1px solid #e2e5ee;
+      padding-bottom: 12px;
+      margin-bottom: 13px;
+    }
+
+    .room-line:last-child {
+      border-bottom: none;
+    }
+
+    .room-line .col {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      font-size: 14px;
+      color: #2c3140;
+    }
+
+    .room-line .col .stk {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .room-line .sep {
+      width: 1px;
+      background: #dfe2ec;
+      margin: 0 22px;
+      align-self: stretch;
+    }
+
+    .room-line img {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+      margin-top: 1px;
+    }
+
+    /* FLORAL */
+    .floral {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .floral img {
+      width: 100%;
+      display: block;
+    }
+
+    .page-foot {
+      position: absolute;
+      bottom: 30px;
+      left: 46px;
+      right: 46px;
+    }
+
+    /* PAGE 2 */
+    .banner {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .banner img {
+      width: 100%;
+      display: block;
+    }
+
+    .content2 {
+      display: flex;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .left2 {
+      flex: 1.35;
+    }
+
+    .right2 {
+      flex: 1;
+    }
+
+    .right2 img {
+      width: 100%;
+      display: block;
+      border-radius: 14px;
+    }
+
+    .sec-h {
+      font-weight: 700;
+      font-size: 21px;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .policy-list {
+      list-style: none;
+    }
+
+    .policy-list li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 0px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: #33384a;
+    }
+
+    .policy-list li:before {
+      content: "\2022";
+      position: absolute;
+      left: 2px;
+      color: #33384a;
+      font-size: 15px;
+    }
+
+    .tc-p {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #33384a;
+      margin-bottom: 10px;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+
+      /* body{background:#fff;padding:0;} */
+      .page {
+        box-shadow: none;
+        margin: 0;
+        min-height: 0;
+        height: 297mm;
+        overflow: hidden;
+      }
+    }
+
+    .guest-name {
+      display: inline-table;
+      background-color: #404F71;
+      height: 22px;
+      padding: 3px 10px;
+      color: white;
+      font-size: 12px;
+      border-radius: 7px;
+    }
+  </style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #525659;
+    }
+
+    .page {
+      width: 794px;
+      height: 1123px;
+      background: #ffffff;
+      overflow: hidden;
+      padding: 20px 50px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ===================== PAGE 1 ===================== -->
+  <div class="page">
+    <div class="pad">
+
+      <!-- HEADER -->
+      <div class="top-logos">
+        <img src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/header.svg"
+          alt="" width="100%" />
+      </div>
+
+      <!-- TITLE -->
+      <h1 class="voucher-title">HOTEL CONFIRMATION VOUCHER</h1>
+      <div class="divider">
+        <img src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/design.svg"
+          alt="" />
+      </div>
+
+      <!-- STAGE -->
+      <div class="stage">
+        <img class="hotel-bg" src="{{hotelImg}}" alt="">
+
+        <div class="booking-wrap">
+          <div class="booking-id">Booking ID: {{bookingId}}</div>
+          <div class="booked-on">Booked on: <b>{{bookingDate}}</b></div>
+        </div>
+
+        <!-- HOTEL BLOCK -->
+        <div class="hotel-block">
+          {{#if isITCGrandChola}}
+          <div class="hotel-badge">
+            <img
+              src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/ITC%20grand%20chola.svg"
+              alt="" />
+          </div>
+          {{/if}}
+
+
+          <div class="hotel-mid">
+            <div class="hotel-name">{{hotelName}}</div>
+            <div class="hrow">
+              <img
+                src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Location.svg"
+                alt="" />
+              <span>{{hotelAddress}}</span>
+            </div>
+            <div class="hrow">
+              <img src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Phone.svg"
+                alt="" />
+              <span>{{hotelContact}}</span>
+            </div>
+            <div class="hrow">
+              <img src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Email.svg"
+                alt="" />
+              <span>{{hotelEmail}}</span>
+            </div>
+          </div>
+
+          <div href="{{hotelGoogleLocation}}" target="_blank" class="hotel-geo">
+            <img class="pin"
+              src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Location%202.svg"
+              alt="" />
+            <a href="{{hotelGoogleLocation}}" target="_blank" style="color:inherit;text-decoration:none;"><span>Google
+                Location</span></a>
+          </div>
+        </div>
+
+        <!-- EEMA MEMBER -->
+        <div class="member">
+          <div class="badge-circle">
+            <img
+              src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/User_Golder%20effect.svg"
+              alt="" />
+          </div>
+          <div class="member-body">
+            <div class="member-title">EEMA MEMBER</div>
+            <div class="member-cols">
+              <div class="col">
+                <img
+                  src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/User.svg"
+                  alt="" />
+                <span>Name: {{primaryGuestName}}</span>
+              </div>
+              <div class="sep"></div>
+              <div class="col">
+                <img
+                  src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Email.svg"
+                  alt="" />
+                <span>{{primaryGuestEmail}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROOM -->
+        <div class="room">
+          <div class="room-num"><img
+              src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/01.svg"
+              alt="" /></div>
+          <div class="room-body">
+            <div class="room-title">{{roomLabel}}</div>
+            <div class="room-line">
+              <div class="col">
+                <img
+                  src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Check%20In.svg"
+                  alt="" />
+                <span>Check-in: {{checkInDate}}</span>
+              </div>
+              <div class="sep"></div>
+              <div class="col">
+                <img
+                  src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Check%20Out.svg"
+                  alt="" />
+                <span>Check-out: {{checkOutDate}}</span>
+              </div>
+            </div>
+            <div class="room-line">
+              <div class="guest-name">
+                Guest 1
+              </div>
+              <div class="sep"></div>
+              <div class="col">
+                <div class="stk">
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/User.svg"
+                      alt="" />
+                    <span>Name: {{primaryGuestName}}</span>
+                  </div>
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Email.svg"
+                      alt="" />
+                    <span>{{primaryGuestEmail}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sep"></div>
+              <div class="col">
+                <div class="stk">
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Meal%20plan.svg"
+                      alt="" />
+                    <span>Meal Plan - {{mealPlan}}</span>
+                  </div>
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Phone.svg"
+                      alt="" />
+                    <span>{{primaryGuestContact}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{#if hasSecondaryGuest}}
+            <div class="room-line" style="border-bottom:none;">
+              <div class="guest-name">
+                Guest 2
+              </div>
+              <div class="sep"></div>
+              <div class="col">
+                <div class="stk">
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/User.svg"
+                      alt="" />
+                    <span>Name: {{secondaryGuestName}}</span>
+                  </div>
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Email.svg"
+                      alt="" />
+                    <span>{{secondaryGuestEmail}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sep"></div>
+              <div class="col">
+
+                <div class="stk">
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Meal%20plan.svg"
+                      alt="" />
+                    <span>Meal Plan - {{mealPlan}}</span>
+                  </div>
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Phone.svg"
+                      alt="" />
+                    <span>{{secondaryGuestContact}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+
+      </div><!-- /stage -->
+    </div><!-- /pad -->
+
+    <div class="page-foot">
+      <div class="floral">
+        <img src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/lotus.svg"
+          alt="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PAGE 2 ===================== -->
+  <div class="page">
+    <div class="pad">
+
+      <!-- BANNER -->
+      <div class="banner">
+        <img src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Branding-2.png"
+          alt="" />
+      </div>
+
+      <!-- CONTENT -->
+      <div class="content2">
+        <div class="left2">
+          <h2 class="sec-h">General Hotel Policy</h2>
+          <ul class="policy-list">
+            <li>Standard check-in time: 03:00 PM</li>
+            <li>Standard check-out time: 12:00 PM</li>
+            <li>Early check-in/late check-out is subject to availability and may incure additional charges.</li>
+            <li>Upon confirmation of the booking the reservation become non-non-refundable. Any Cancellation, amendment
+              or no show 100% of the total booking amount shall be charged as cancellation fees.</li>
+            <li>Any request for early check-in or late check-out must be confirmed directly with the hotel.</li>
+            <li>All guests are required to present valid ID proof at check-in.</li>
+            <li>Cotrav is not responsible for any changes in the hotel&rsquo;s check-in, check-out, or other policies.
+            </li>
+          </ul>
+
+          <h2 class="sec-h" style="margin-top:22px;">Terms &amp; Conditions</h2>
+          <p class="tc-p">CoTrav provides a platform to facilitate transactions between agents, clients, users, and
+            customers who are attending EEMAGINE 2026. CoTrav is responsible for:</p>
+          <ul class="policy-list">
+            <li>Issuing a valid hotel voucher (accepted by the hotel).</li>
+            <li>Offering support in case of cancellations.</li>
+            <li>Providing customer support and assistance if needed.</li>
+          </ul>
+        </div>
+
+        <div class="right2">
+          <img
+            src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Branding-1.png"
+            alt="" />
+        </div>
+      </div>
+
+    </div><!-- /pad -->
+
+    <div class="page-foot">
+      <div class="floral">
+        <img src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/lotus.svg"
+          alt="" />
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

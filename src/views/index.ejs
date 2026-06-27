@@ -1,0 +1,63 @@
+<%- include('partials/head', { title: 'Upload Excel' }) %>
+<%- include('partials/navbar', { page: 'home' }) %>
+
+<div class="container">
+  <h1 class="page-title">Upload Excel File</h1>
+  <p class="page-sub">Upload an .xlsx, .xls, or .csv file — data will be parsed and shown as a live preview.</p>
+
+  <% if (error) { %>
+    <div class="alert alert-error">⚠ <%= error %></div>
+  <% } %>
+
+  <div class="card">
+    <div class="card-header">📂 Select File</div>
+    <div class="card-body">
+      <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+
+        <div class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" name="excelFile" accept=".xlsx,.xls,.csv" />
+          <div class="drop-icon">📊</div>
+          <div class="drop-title">Drag & drop your file here</div>
+          <div class="drop-sub">or click to browse — supports .xlsx, .xls, .csv</div>
+          <div class="file-name" id="fileName" style="display:none;"></div>
+        </div>
+
+        <div style="margin-top:20px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <div style="flex:1; min-width:200px;">
+            <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px;">Sheet to read (optional)</label>
+            <input type="text" name="sheetName" placeholder="Sheet1 (leave blank for first sheet)"
+              style="width:100%;padding:9px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;outline:none;" />
+          </div>
+          <div style="padding-top:20px;">
+            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+              <span class="spinner" style="display:none;"></span>
+              Parse File
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:24px;">
+    <div class="card-header">ℹ How it works</div>
+    <div class="card-body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
+      <% [
+        ['1️⃣', 'Upload', 'Drop or select your Excel / CSV file above.'],
+        ['2️⃣', 'Parse', 'The server reads every row and converts it to JSON.'],
+        ['3️⃣', 'Preview', 'View, search, and filter the data in a live table.'],
+        ['4️⃣', 'Process', 'Send vouchers via email or WhatsApp in bulk.']
+      ].forEach(([icon, step, desc]) => { %>
+        <div style="text-align:center;padding:16px;">
+          <div style="font-size:32px;margin-bottom:10px;"><%= icon %></div>
+          <div style="font-weight:600;margin-bottom:6px;"><%= step %></div>
+          <div style="font-size:13px;color:var(--muted);"><%= desc %></div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
+<script src="/js/upload.js"></script>
+<%- include('partials/footer') %>

@@ -1,0 +1,113 @@
+<%- include('partials/head', { title: 'Preview — ' + fileName }) %>
+<%- include('partials/navbar', { page: 'preview' }) %>
+
+<!-- Embed JSON data for client-side JS (no XSS — JSON.stringify escapes) -->
+<script id="tableData" type="application/json"><%- JSON.stringify(rows) %></script>
+
+<div class="container">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px;">
+    <h1 class="page-title">📋 <%= fileName %></h1>
+    <a href="/" class="btn btn-outline">← Upload another</a>
+  </div>
+  <p class="page-sub">Sheet: <strong><%= activeSheet %></strong> &nbsp;|&nbsp; Parsed on <%= new Date().toLocaleString('en-IN') %></p>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-label">Total Rows</div>
+      <div class="stat-value" id="rowCount"><%= rows.length %></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Columns</div>
+      <div class="stat-value"><%= columns.length %></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">File</div>
+      <div class="stat-value" style="font-size:14px;padding-top:6px;"><%= fileSize %></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Available Sheets</div>
+      <div class="stat-value" style="font-size:14px;padding-top:6px;"><%= sheets.join(', ') || '—' %></div>
+    </div>
+  </div>
+
+  <!-- Tabs: Table | JSON -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="tab-table">Table View</button>
+    <button class="tab-btn" data-tab="tab-json">JSON View</button>
+  </div>
+
+  <!-- TAB: Table -->
+  <div class="tab-panel active" id="tab-table">
+
+    <!-- Column toggle pills -->
+    <div class="col-pills">
+      <span style="font-size:12px;color:var(--muted);padding:4px 0;margin-right:4px;">Columns:</span>
+      <% columns.forEach(col => { %>
+        <span class="col-pill on" data-col="<%= col %>"><%= col %></span>
+      <% }) %>
+    </div>
+
+    <!-- Search + download toolbar -->
+    <div class="toolbar">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search across all columns…" />
+      <a href="/upload/download-json?file=<%= encodeURIComponent(jsonFile) %>"
+         class="btn btn-outline btn-sm">⬇ Download JSON</a>
+      <button id="genVouchersBtn" class="btn btn-primary btn-sm" data-token="<%= token %>">🏨 Generate Hotel Vouchers</button>
+    </div>
+
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <!-- TAB: JSON -->
+  <div class="tab-panel" id="tab-json">
+    <div class="card">
+      <div class="card-header">
+        JSON Output
+        <span style="margin-left:auto;font-size:12px;color:var(--muted);">First 50 rows shown</span>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <div class="json-viewer"><%= JSON.stringify(rows.slice(0,50), null, 2) %></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="/js/preview.js"></script>
+<script>
+(function () {
+  const btn = document.getElementById('genVouchersBtn');
+  if (!btn) return;
+  btn.addEventListener('click', async function () {
+    const allRows = JSON.parse(document.getElementById('tableData').textContent);
+    if (!allRows.length) { alert('No rows to process.'); return; }
+    btn.disabled = true;
+    btn.textContent = '⏳ Generating…';
+    try {
+      const resp = await fetch('/vouchers/hotel/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rows: allRows }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || 'Generation failed');
+      window.location.href = `/vouchers/hotel/results/${data.token}`;
+    } catch (err) {
+      alert('Error: ' + err.message);
+      btn.disabled = false;
+      btn.textContent = '🏨 Generate Hotel Vouchers';
+    }
+  });
+})();
+</script>
+<%- include('partials/footer') %>

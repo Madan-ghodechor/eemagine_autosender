@@ -1,0 +1,46 @@
+<%- include('partials/head', { title: 'Upload History' }) %>
+<%- include('partials/navbar', { page: 'history' }) %>
+
+<div class="container">
+  <h1 class="page-title">Upload History</h1>
+  <p class="page-sub">Recent file uploads in this session (cleared on server restart).</p>
+
+  <% if (!entries.length) { %>
+    <div class="alert alert-info" style="max-width:480px;">
+      No files uploaded yet. <a href="/" style="color:inherit;font-weight:600;">Upload one now →</a>
+    </div>
+  <% } else { %>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Sheet</th>
+            <th>Rows</th>
+            <th>Columns</th>
+            <th>Uploaded At</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% entries.forEach(e => { %>
+          <tr>
+            <td><strong><%= e.fileName %></strong></td>
+            <td><span class="badge badge-blue"><%= e.activeSheet %></span></td>
+            <td><%= e.rowCount.toLocaleString() %></td>
+            <td><%= e.columns %></td>
+            <td style="color:var(--muted);font-size:12px;"><%= new Date(e.uploadedAt).toLocaleString('en-IN') %></td>
+            <td>
+              <a href="/upload/preview/<%= e.token %>" class="btn btn-outline btn-sm">View</a>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,337 @@
+<%- include('partials/head', { title: 'Bookings' }) %>
+<%- include('partials/navbar', { page: 'bookings' }) %>
+
+<style>
+  .bk-container { max-width:1200px; margin:0 auto; padding:0 24px; }
+
+  /* Filter bar */
+  .filter-bar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:18px; }
+  .filter-bar input, .filter-bar select {
+    padding:8px 12px; border:1px solid #dde1ea; border-radius:6px;
+    font-size:13px; outline:none; background:#fff; color:var(--text);
+  }
+  .filter-bar input:focus, .filter-bar select:focus { border-color:var(--primary); }
+  .filter-bar input { flex:1; min-width:180px; }
+
+  /* Table */
+  .table-wrap { overflow-x:auto; border-radius:0 0 10px 10px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th {
+    background:#f7f9fc; color:var(--muted); padding:10px 14px;
+    text-align:left; font-size:11px; font-weight:700; letter-spacing:.5px;
+    text-transform:uppercase; border-bottom:2px solid #eaecf4; white-space:nowrap;
+  }
+  thead th:first-child { border-left:3px solid var(--primary); }
+  tbody td { padding:11px 14px; border-bottom:1px solid #f0f2f7; vertical-align:middle; }
+  tbody tr:last-child td { border-bottom:none; }
+  tbody tr:hover td { background:#f9fafb; }
+
+  /* Column helpers */
+  .col-id   { font-weight:700; font-family:monospace; color:var(--primary); font-size:12px; white-space:nowrap; }
+  .col-name { font-weight:600; color:#1a202c; }
+  .col-sub  { font-size:11px; color:var(--muted); margin-top:2px; }
+  .col-date { white-space:nowrap; font-size:12px; }
+  .col-date span { display:block; }
+  .col-date .arrow { color:var(--muted); font-size:10px; }
+
+  /* Badges */
+  .badge { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:600; white-space:nowrap; }
+  .badge-sent    { background:#e8f8f0; color:#1e8a4e; }
+  .badge-pending { background:#fef3e2; color:#b7620a; }
+  .badge-room    { background:#eef2ff; color:#4361ee; }
+
+  /* Action button */
+  .btn-send { padding:5px 12px; font-size:12px; border-radius:6px; white-space:nowrap; }
+  .btn-sent { padding:5px 12px; font-size:12px; border-radius:6px; opacity:.4; cursor:default; }
+
+  /* Empty state */
+  .empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
+  .empty-state .icon { font-size:48px; margin-bottom:12px; }
+
+  /* Pagination */
+  .pagination { display:flex; gap:6px; align-items:center; justify-content:center; margin-top:20px; flex-wrap:wrap; }
+  .pagination a, .pagination span {
+    padding:5px 12px; border:1px solid #dde1ea; border-radius:6px;
+    font-size:13px; text-decoration:none; color:var(--text);
+  }
+  .pagination a:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .pagination .current { background:var(--primary); color:#fff; border-color:var(--primary); font-weight:600; }
+</style>
+
+<div class="bk-container">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:24px 0 6px;">
+    <div>
+      <h1 class="page-title" style="margin:0">Bookings</h1>
+      <p class="page-sub" style="margin:4px 0 0">Total: <strong><%= total %></strong> records</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <button id="send-all-btn" class="btn btn-primary">✉ Send All Pending</button>
+      <a href="/" class="btn btn-outline">← Upload Excel</a>
+    </div>
+  </div>
+
+  <!-- Bulk-send progress overlay -->
+  <div id="bulk-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:12px;padding:36px 40px;min-width:340px;max-width:460px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.18);">
+      <div id="bulk-icon" style="font-size:40px;margin-bottom:12px;">📤</div>
+      <div id="bulk-title" style="font-size:18px;font-weight:700;margin-bottom:6px;">Sending Vouchers…</div>
+      <div id="bulk-sub"   style="font-size:13px;color:#666;margin-bottom:20px;"></div>
+      <div style="background:#eaecf4;border-radius:99px;height:10px;overflow:hidden;margin-bottom:12px;">
+        <div id="bulk-bar" style="height:100%;width:0%;background:var(--primary);border-radius:99px;transition:width .4s ease;"></div>
+      </div>
+      <div id="bulk-count" style="font-size:13px;color:#888;"></div>
+      <button id="bulk-close" style="display:none;margin-top:20px;" class="btn btn-primary">Close &amp; Refresh</button>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <form method="GET" action="/bookings" class="filter-bar">
+    <input type="text" name="search" value="<%= search %>" placeholder="Search guest, hotel, email…" />
+    <select name="batch" style="min-width:160px">
+      <option value="">All uploads</option>
+      <% batches.forEach(b => { %>
+        <option value="<%= b %>" <%= batch === b ? 'selected' : '' %>>
+          Batch ···<%= b.slice(-8) %>
+        </option>
+      <% }) %>
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm">Search</button>
+    <% if (search || batch) { %>
+      <a href="/bookings" class="btn btn-outline btn-sm">✕ Clear</a>
+    <% } %>
+  </form>
+
+  <% if (bookings.length === 0) { %>
+    <div class="card">
+      <div class="empty-state">
+        <div class="icon">📭</div>
+        <div style="font-weight:600;margin-bottom:6px;">No bookings found</div>
+        <div>Upload an Excel file to populate this table.</div>
+        <a href="/" class="btn btn-primary" style="margin-top:16px;">Upload Excel</a>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Guest</th>
+              <th>Hotel</th>
+              <th>Room</th>
+              <th>Check-In / Out</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bookings.forEach((b) => {
+                const d         = b.data;
+                const guestName = d['Primary Guest Name'] || '—';
+                const guestEmail= d['Primary Guest Email'] || '';
+                const hotel     = d['Hotel Name'] || '—';
+                const room      = d['Room Type'] || '—';
+                const checkIn   = d['Check -In Date'] || d['Check-In Date'] || '—';
+                const checkOut  = d['Check-Out Date'] || '—';
+            %>
+              <tr id="row-<%= b._id %>">
+                <td class="col-id"><%= b.bookingId %></td>
+
+                <td>
+                  <div class="col-name"><%= guestName %></div>
+                  <% if (guestEmail) { %>
+                    <div class="col-sub"><%= guestEmail %></div>
+                  <% } %>
+                </td>
+
+                <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="<%= hotel %>">
+                  <%= hotel %>
+                </td>
+
+                <td><span class="badge badge-room"><%= room %></span></td>
+
+                <td class="col-date">
+                  <span><%= checkIn %></span>
+                  <span class="arrow">↓</span>
+                  <span><%= checkOut %></span>
+                </td>
+
+                <td class="status-cell">
+                  <% if (b.voucherSend) { %>
+                    <span class="badge badge-sent">✓ Sent</span>
+                  <% } else { %>
+                    <span class="badge badge-pending">Pending</span>
+                  <% } %>
+                </td>
+
+                <td>
+                  <% if (b.voucherSend) { %>
+                    <button class="btn btn-sm btn-sent" disabled>✓ Sent</button>
+                  <% } else { %>
+                    <button class="btn btn-primary btn-sm btn-send send-email-btn"
+                      data-id="<%= b._id %>"
+                      data-email="<%= guestEmail %>">
+                      ✉ Send
+                    </button>
+                  <% } %>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <% if (totalPages > 1) { %>
+      <div class="pagination">
+        <% if (currentPage > 1) { %>
+          <a href="/bookings?page=<%= currentPage - 1 %>&search=<%= encodeURIComponent(search) %>&batch=<%= encodeURIComponent(batch) %>">← Prev</a>
+        <% } %>
+        <% for (let p = 1; p <= totalPages; p++) { %>
+          <% if (p === currentPage) { %>
+            <span class="current"><%= p %></span>
+          <% } else if (p === 1 || p === totalPages || Math.abs(p - currentPage) <= 2) { %>
+            <a href="/bookings?page=<%= p %>&search=<%= encodeURIComponent(search) %>&batch=<%= encodeURIComponent(batch) %>"><%= p %></a>
+          <% } else if (Math.abs(p - currentPage) === 3) { %>
+            <span>…</span>
+          <% } %>
+        <% } %>
+        <% if (currentPage < totalPages) { %>
+          <a href="/bookings?page=<%= currentPage + 1 %>&search=<%= encodeURIComponent(search) %>&batch=<%= encodeURIComponent(batch) %>">Next →</a>
+        <% } %>
+      </div>
+    <% } %>
+  <% } %>
+</div>
+
+<script>
+// ── Bulk send all pending ──
+document.getElementById('send-all-btn').addEventListener('click', async function () {
+  const params = new URLSearchParams(window.location.search);
+  const batch  = params.get('batch') || '';
+
+  if (!confirm('Send vouchers to ALL pending bookings' + (batch ? ' in this batch' : '') + '?\nThis will process them in chunks of 10.\n\nYou can close this tab — sending continues on the server.')) return;
+
+  const overlay  = document.getElementById('bulk-overlay');
+  const title    = document.getElementById('bulk-title');
+  const sub      = document.getElementById('bulk-sub');
+  const bar      = document.getElementById('bulk-bar');
+  const count    = document.getElementById('bulk-count');
+  const icon     = document.getElementById('bulk-icon');
+  const closeBtn = document.getElementById('bulk-close');
+
+  overlay.style.display  = 'flex';
+  title.textContent      = 'Starting…';
+  sub.textContent        = '';
+  bar.style.width        = '0%';
+  count.textContent      = '';
+  icon.textContent       = '📤';
+  closeBtn.style.display = 'none';
+
+  // Start the job
+  const body = new URLSearchParams();
+  if (batch) body.set('batch', batch);
+
+  let jobId, total;
+  try {
+    const r = await fetch('/bookings/send-all', { method: 'POST', body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error || 'Failed to start');
+    if (d.total === 0) {
+      icon.textContent  = 'ℹ️';
+      title.textContent = 'Nothing to send';
+      sub.textContent   = 'All bookings are already sent.';
+      closeBtn.style.display = 'inline-block';
+      return;
+    }
+    jobId = d.jobId;
+    total = d.total;
+  } catch (err) {
+    icon.textContent  = '❌';
+    title.textContent = 'Error';
+    sub.textContent   = err.message;
+    closeBtn.style.display = 'inline-block';
+    return;
+  }
+
+  title.textContent = 'Sending Vouchers…';
+  sub.textContent   = `Processing ${total} pending bookings in chunks of 10`;
+  count.textContent = `0 / ${total} sent`;
+
+  // Poll every 4 seconds — job runs on server regardless of browser state
+  const timer = setInterval(async () => {
+    try {
+      const r = await fetch(`/bookings/send-all/${jobId}`);
+      const d = await r.json();
+      if (!d.success) return;
+
+      const pct = total > 0 ? Math.round((d.sent / total) * 100) : 100;
+      bar.style.width   = pct + '%';
+      count.textContent = `${d.sent} / ${total} sent`;
+
+      if (d.status === 'done') {
+        clearInterval(timer);
+        bar.style.width        = '100%';
+        icon.textContent       = '✅';
+        title.textContent      = 'All Done!';
+        sub.textContent        = `${d.sent} voucher${d.sent !== 1 ? 's' : ''} dispatched successfully.`;
+        count.textContent      = '';
+        closeBtn.style.display = 'inline-block';
+      } else if (d.status === 'error') {
+        clearInterval(timer);
+        icon.textContent       = '❌';
+        title.textContent      = 'Error';
+        sub.textContent        = d.error || 'An error occurred.';
+        closeBtn.style.display = 'inline-block';
+      } else {
+        sub.textContent = `${total - d.sent} remaining…`;
+      }
+    } catch (_) { /* network hiccup — keep polling */ }
+  }, 4000);
+
+  document.getElementById('bulk-close').onclick = function () {
+    clearInterval(timer);
+    overlay.style.display = 'none';
+    window.location.reload();
+  };
+});
+
+// ── Per-row send ──
+document.querySelectorAll('.send-email-btn').forEach(btn => {
+  btn.addEventListener('click', async function () {
+    const id    = this.dataset.id;
+    const email = this.dataset.email;
+
+    if (!email) {
+      alert('No email address found for this booking.');
+      return;
+    }
+
+    if (!confirm(`Send voucher to ${email}?`)) return;
+
+    this.disabled    = true;
+    this.textContent = '⏳ Sending…';
+
+    try {
+      const res  = await fetch(`/bookings/${id}/send-email`, { method: 'POST' });
+      const data = await res.json();
+
+      if (!res.ok || !data.success) throw new Error(data.error || 'Failed');
+
+      const row = document.getElementById(`row-${id}`);
+      row.querySelector('.status-cell').innerHTML =
+        '<span class="badge badge-sent">✓ Sent</span>';
+      this.textContent = '✓ Sent';
+      this.className   = 'btn btn-sm btn-sent';
+    } catch (err) {
+      alert('Error: ' + err.message);
+      this.disabled    = false;
+      this.textContent = '✉ Send';
+    }
+  });
+});
+</script>
+
+<%- include('partials/footer') %>

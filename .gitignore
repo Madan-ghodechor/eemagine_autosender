@@ -1,0 +1,7 @@
+node_modules/
+.env
+vouchers/
+.wwebjs_auth/
+.wwebjs_cache/
+*.pdf
+*.png
