@@ -1,17 +1,9 @@
 const logger = require('../utils/logger');
 
-/**
- * Send the EEMAgine 2026 booking voucher via Cheerio WhatsApp template API.
- * @param {object} options
- * @param {string} options.to           - Phone number (digits only or with country code)
- * @param {string} options.guestName    - {{1}} in body
- * @param {string} options.stayDate     - {{2}} in body e.g. "25 June 2026"
- * @param {string} options.contact      - {{3}} in body e.g. "+91 8840165393"
- * @param {string} options.s3Url        - Public S3 URL of the voucher PDF
- * @param {string} [options.fileName]   - Display filename for the document header
- */
-async function sendWhatsAppVoucher({ to, guestName, stayDate, contact, s3Url, fileName = 'Voucher' }) {
-  const phone = to.replace(/\D/g, '');
+async function sendWhatsAppVoucher({ to, guestName, hotelName, stayDate, s3Url, fileName = 'Voucher' }) {
+  const phone       = to.replace(/\D/g, '');
+  const contactName = process.env.CONTACT_NAME   || '';
+  const contactNum  = process.env.CONTACT_NUMBER || '';
 
   const payload = {
     to: phone,
@@ -32,8 +24,10 @@ async function sendWhatsAppVoucher({ to, guestName, stayDate, contact, s3Url, fi
           type: 'body',
           parameters: [
             { type: 'text', text: guestName },
+            { type: 'text', text: hotelName },
             { type: 'text', text: stayDate },
-            { type: 'text', text: "+91 8840165393" },
+            { type: 'text', text: contactName },
+            { type: 'text', text: contactNum },
           ],
         },
       ],

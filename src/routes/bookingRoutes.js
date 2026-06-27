@@ -30,16 +30,16 @@ async function dispatchVoucher(booking) {
           <p>Hi ${guestName},</p>
           <p>We're pleased to inform you that your payment for the <strong>EEMAgine 2026</strong> has been successfully processed.</p>
           <p>Your stay at <strong>${hotelName}</strong> on <strong>${stayDate}</strong> is now confirmed.</p>
-          ${contact ? `<p>Should you require any assistance prior to your arrival, our team is available at <strong>+91 8840165393</strong>.</p>` : ''}
+          <p>Should you require any assistance, please reach out to <strong>${process.env.CONTACT_NAME}</strong>, at <strong>${process.env.CONTACT_NUMBER}</strong>.</p>
           <p>We look forward to hosting you and wish you a wonderful stay.</p>
-          <br/>
+          <br/> 
           <p style="margin:0">Warm regards,</p>
           <p style="margin:4px 0 0;font-weight:600;">Team CoTrav</p>
         </div>
       `,
       attachments: [{ filename: result.fileName, content: result.buffer, contentType: 'application/pdf' }],
     }) : Promise.resolve('no-email'),
-    phone ? sendWhatsAppVoucher({ to: phone, guestName, stayDate, contact: contact || '', s3Url: result.s3Url, fileName: result.fileName })
+    phone ? sendWhatsAppVoucher({ to: phone, guestName, hotelName, stayDate, s3Url: result.s3Url, fileName: result.fileName })
           : Promise.resolve('no-phone'),
   ]);
 
