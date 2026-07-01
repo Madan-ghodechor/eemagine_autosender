@@ -64,6 +64,11 @@ async function generatePDF(row, bookingId) {
   const roomType     = (row['Room Type'] || 'Single').toString().trim();
   const hotelAddress = (row['Hotel Address'] || '').replace(/\r?\n/g, '<br>');
   const resolvedId   = bookingId || `EEMA-${new Date().getFullYear()}-${Date.now().toString().slice(-4)}`;
+  const thirdGuestName = row['Third Guest Name'] || row['thirdGuestName'] || '';
+  const thirdGuestContact = row['Third Guest Contact'] || row['thirdGuestContact'] || '';
+  const thirdGuestEmail = row['Third Guest Email'] || row['thirdGuestEmail'] || '';
+  const thirdGuestDetails = String(thirdGuestName || thirdGuestContact || thirdGuestEmail).trim();
+  const hasThirdGuest = Boolean(thirdGuestDetails);
 
   const data = {
     bookingId: resolvedId,
@@ -88,12 +93,18 @@ async function generatePDF(row, bookingId) {
     secondaryGuestContact: row['Secondary Guest Contact'] || row['secondaryGuestContact'] || '',
     secondaryGuestEmail:   row['Secondary Guest Email'] || row['secondaryGuestEmail'] || '',
     hasSecondaryGuest:     (row['Secondary Guest Name'] || row['secondaryGuestName'] || '').trim() ? 'true' : '',
+    thirdGuestName,
+    thirdGuestContact,
+    thirdGuestEmail,
+    hasThirdGuest:          hasThirdGuest ? 'true' : '',
     mealPlan:              'APAI',
   };
 
   const html     = renderTemplate(fs.readFileSync(TEMPLATE_PATH, 'utf-8'), data);
   const safeName = (data.primaryGuestName || 'guest').replace(/[^a-z0-9]/gi, '_').toLowerCase();
-  const fileName = bookingId ? `${bookingId}.pdf` : `hotel_voucher_${safeName}_${Date.now()}.pdf`;
+  // const fileName = bookingId ? `${bookingId}.pdf` : `hotel_voucher_${safeName}_${Date.now()}.pdf`;
+
+  const fileName = `${safeName}_hotel_voucher.pdf`;
 
   const browser = await puppeteer.launch({
     headless: true,

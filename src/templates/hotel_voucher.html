@@ -520,13 +520,12 @@
 
         <!-- HOTEL BLOCK -->
         <div class="hotel-block">
-          {{#if isITCGrandChola}}
+          
           <div class="hotel-badge">
             <img
               src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/wow/Trident_Bandra_Logo-01.svg"
               alt="" />
           </div>
-          {{/if}}
 
 
           <div class="hotel-mid">
@@ -566,7 +565,7 @@
               alt="" />
           </div>
           <div class="member-body">
-            <div class="member-title">EEMA MEMBER</div>
+            <div class="member-title">PRIMARY ATTENDEE</div>
             <div class="member-cols">
               <div class="col">
                 <img
@@ -647,7 +646,7 @@
               </div>
             </div>
             {{#if hasSecondaryGuest}}
-            <div class="room-line" style="border-bottom:none;">
+            <div class="room-line">
               <div class="guest-name">
                 Guest 2
               </div>
@@ -683,6 +682,48 @@
                       src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Phone.svg"
                       alt="" />
                     <span>{{secondaryGuestContact}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/if}}
+            {{#if hasThirdGuest}}
+            <div class="room-line" style="border-bottom:none;">
+              <div class="guest-name">
+                Guest 3
+              </div>
+              <div class="sep"></div>
+              <div class="col">
+                <div class="stk">
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/User.svg"
+                      alt="" />
+                    <span>Name: {{thirdGuestName}}</span>
+                  </div>
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Email.svg"
+                      alt="" />
+                    <span>{{thirdGuestEmail}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sep"></div>
+              <div class="col">
+
+                <div class="stk">
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Meal%20plan.svg"
+                      alt="" />
+                    <span>Meal Plan - {{mealPlan}}</span>
+                  </div>
+                  <div style="display:flex;gap:11px;align-items:center;">
+                    <img
+                      src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/Phone.svg"
+                      alt="" />
+                    <span>{{thirdGuestContact}}</span>
                   </div>
                 </div>
               </div>
@@ -730,7 +771,7 @@
 
           <h2 class="sec-h" style="margin-top:22px;">Terms &amp; Conditions</h2>
           <p class="tc-p">CoTrav provides a platform to facilitate transactions between agents, clients, users, and
-            customers who are attending {{eventName}}. CoTrav is responsible for:</p>
+            customers who are attending WOW AWARDS ASIA 2026. CoTrav is responsible for:</p>
           <ul class="policy-list">
             <li>Issuing a valid hotel voucher (accepted by the hotel).</li>
             <li>Offering support in case of cancellations.</li>

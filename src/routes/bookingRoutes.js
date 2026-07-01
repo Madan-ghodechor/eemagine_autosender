@@ -17,51 +17,66 @@ async function dispatchVoucher(booking) {
   const phone     = row['Primary Guest Contact'] || row['Contact'] || '';
   const contact   = row['Hotel Support Contact'] || row['Contact'] || '';
   const stayDate  = checkIn && checkOut ? `${checkIn} – ${checkOut}` : (checkIn || checkOut);
+  const pauseEmail = process.env.PAUSE_EMAIL_SEND === 'true';
 
   logger.info(`[${booking.bookingId}] Generating PDF for ${guestName}…`);
   const { buffer, fileName } = await generatePDF(row, booking.bookingId);
 
   // Email only needs the buffer — run in parallel with S3 upload
   logger.info(`[${booking.bookingId}] Email + S3 upload in parallel…`);
+  // const [emailResult, s3Result] = await Promise.allSettled([
+  //   to ? sendEmail({
+  //     to,
+  //     subject: `Booking Confirmed – EEMAgine 2026 x CoTrav at ${hotelName}`,
+  //     html: `
+  //       <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:32px 24px;color:#1a202c;line-height:1.8;font-size:15px;">
+  //         <p>Hi ${guestName},</p>
+  //         <p>We're pleased to inform you that your payment for the <strong>EEMAgine 2026</strong> has been successfully processed.</p>
+  //         <p>Your stay at <strong>${hotelName}</strong> on <strong>${stayDate}</strong> is now confirmed.</p>
+  //         <p>Should you require any assistance, please reach out to <strong>${process.env.CONTACT_NAME}</strong>, EEMA, at <strong>${process.env.CONTACT_NUMBER}</strong>.</p>
+  //         <p>We look forward to hosting you and wish you a wonderful stay.</p>
+  //         <br/>
+  //         <p style="margin:0">Warm regards,</p>
+  //         <p style="margin:4px 0 0;font-weight:600;">Team CoTrav</p>
+  //       </div>
+  //     `,
+  //     attachments: [{ filename: fileName, content: buffer, contentType: 'application/pdf' }],
+  //   }) : Promise.resolve('no-email'),
+  //   uploadToS3(buffer, fileName),
+  // ]);
+
   const [emailResult, s3Result] = await Promise.allSettled([
-    to ? sendEmail({
-      to,
-      subject: `Booking Confirmed – EEMAgine 2026 x CoTrav at ${hotelName}`,
-      html: `
-        <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:32px 24px;color:#1a202c;line-height:1.8;font-size:15px;">
-          <p>Hi ${guestName},</p>
-          <p>We're pleased to inform you that your payment for the <strong>EEMAgine 2026</strong> has been successfully processed.</p>
-          <p>Your stay at <strong>${hotelName}</strong> on <strong>${stayDate}</strong> is now confirmed.</p>
-          <p>Should you require any assistance, please reach out to <strong>${process.env.CONTACT_NAME}</strong>, EEMA, at <strong>${process.env.CONTACT_NUMBER}</strong>.</p>
-          <p>We look forward to hosting you and wish you a wonderful stay.</p>
-          <br/>
-          <p style="margin:0">Warm regards,</p>
-          <p style="margin:4px 0 0;font-weight:600;">Team CoTrav</p>
-        </div>
-      `,
-      attachments: [{ filename: fileName, content: buffer, contentType: 'application/pdf' }],
-    }) : Promise.resolve('no-email'),
-    uploadToS3(buffer, fileName),
-  ]);
+  Promise.resolve('email-paused'),
+  uploadToS3(buffer, fileName),
+]);
+
+  // if (to) {
+  //   if (emailResult.status === 'fulfilled') logger.success(`[${booking.bookingId}] Email sent to ${to}`);
+  //   else logger.error(`[${booking.bookingId}] Email failed`, emailResult.reason);
+  // }
 
   if (to) {
-    if (emailResult.status === 'fulfilled') logger.success(`[${booking.bookingId}] Email sent to ${to}`);
-    else logger.error(`[${booking.bookingId}] Email failed`, emailResult.reason);
-  }
+  logger.info(`[${booking.bookingId}] Email paused for ${to}`);
+}
 
   // WhatsApp needs S3 URL — runs after S3 upload resolves
+
+  // if (phone) {
+  //   if (s3Result.status === 'fulfilled') {
+  //     try {
+  //       await sendWhatsAppVoucher({ to: phone, guestName, hotelName, stayDate, s3Url: s3Result.value, fileName });
+  //       logger.success(`[${booking.bookingId}] WhatsApp sent to ${phone}`);
+  //     } catch (err) {
+  //       logger.error(`[${booking.bookingId}] WhatsApp failed`, err);
+  //     }
+  //   } else {
+  //     logger.error(`[${booking.bookingId}] S3 upload failed — WhatsApp skipped`, s3Result.reason);
+  //   }
+  // }
+
   if (phone) {
-    if (s3Result.status === 'fulfilled') {
-      try {
-        await sendWhatsAppVoucher({ to: phone, guestName, hotelName, stayDate, s3Url: s3Result.value, fileName });
-        logger.success(`[${booking.bookingId}] WhatsApp sent to ${phone}`);
-      } catch (err) {
-        logger.error(`[${booking.bookingId}] WhatsApp failed`, err);
-      }
-    } else {
-      logger.error(`[${booking.bookingId}] S3 upload failed — WhatsApp skipped`, s3Result.reason);
-    }
-  }
+  logger.info(`[${booking.bookingId}] WhatsApp paused for ${phone}`);
+}
 
   await Booking.findByIdAndUpdate(booking._id, { voucherSend: true });
 }

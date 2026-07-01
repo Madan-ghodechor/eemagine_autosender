@@ -122,6 +122,24 @@
       </div>
     </div>
 
+    <div id="thirdGuestSection" style="display:none;">
+      <div class="section-heading" style="margin-top:20px">Third Guest <span style="font-size:11px;color:var(--muted);text-transform:none;letter-spacing:0">(triple occupancy)</span></div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Full Name</label>
+          <input type="text" name="Third Guest Name" placeholder="Alex Doe" />
+        </div>
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="text" name="Third Guest Contact" placeholder="+91 99999 00000" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="Third Guest Email" placeholder="guest3@email.com" />
+        </div>
+      </div>
+    </div>
+
     <div style="display:flex;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap;">
       <button type="submit" class="btn btn-primary" id="downloadBtn">⬇ Download PDF</button>
       <button type="button" class="btn btn-outline" id="resetBtn">Reset</button>
@@ -148,6 +166,9 @@
     "Secondary Guest Name":    "Basant Bhagat",
     "Secondary Guest Contact": "9294884989",
     "Secondary Guest Email":   "basant.bhagat@cotrav.co",
+    "Third Guest Name":        "",
+    "Third Guest Contact":     "",
+    "Third Guest Email":       "",
   };
 
   // Convert "25 Jun 2026" → "2026-06-25" for date inputs
@@ -176,10 +197,27 @@
   const form = document.getElementById('voucherForm');
   const btn  = document.getElementById('downloadBtn');
   const msg  = document.getElementById('statusMsg');
+  const roomTypeSelect = document.querySelector('[name="Room Type"]');
+  const thirdGuestSection = document.getElementById('thirdGuestSection');
+
+  function updateThirdGuestSection() {
+    const isTriple = roomTypeSelect?.value === 'Triple';
+    thirdGuestSection.style.display = isTriple ? 'block' : 'none';
+
+    if (!isTriple) {
+      thirdGuestSection.querySelectorAll('input').forEach((input) => {
+        input.value = '';
+      });
+    }
+  }
+
+  roomTypeSelect?.addEventListener('change', updateThirdGuestSection);
+  updateThirdGuestSection();
 
   document.getElementById('resetBtn').addEventListener('click', () => {
     form.reset();
     applyPrefill(PREFILL);
+    updateThirdGuestSection();
     msg.textContent = '';
     msg.className = '';
   });
