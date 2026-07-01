@@ -12,7 +12,7 @@ const s3 = new S3Client({
 async function uploadToS3(buffer, fileName) {
   const bucket = process.env.AWS_S3_BUCKET;
   const region = process.env.AWS_REGION || 'us-east-2';
-  const key    = `cotravin_assets/Madan/eemagine/vouchers/${fileName}`;
+  const key    = `cotravin_assets/Madan/wow/vouchers/${fileName}`;
 
   await s3.send(new PutObjectCommand({
     Bucket:      bucket,

@@ -39,6 +39,25 @@ function getHotelImg(hotelName) {
   return match ? HOTEL_IMAGES[match] : 'https://dummy.link/default-hotel.png';
 }
 
+async function waitForImages(page) {
+  await page.evaluate(async () => {
+    const images = Array.from(document.images);
+
+    await Promise.all(images.map((img) => {
+      if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+
+      return new Promise((resolve) => {
+        img.addEventListener('load', resolve, { once: true });
+        img.addEventListener('error', resolve, { once: true });
+      });
+    }));
+
+    await Promise.all(images.map((img) => (
+      img.decode ? img.decode().catch(() => {}) : Promise.resolve()
+    )));
+  });
+}
+
 async function generatePDF(row, bookingId) {
   const hotelName    = row['Hotel Name'] || 'Hotel';
   const { line1, line2 } = splitHotelName(hotelName);
@@ -85,7 +104,8 @@ async function generatePDF(row, bookingId) {
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: 794, height: 1123, deviceScaleFactor: 1 });
-    await page.setContent(html, { waitUntil: 'networkidle2', timeout: 60000 });
+    await page.setContent(html, { waitUntil: 'networkidle0', timeout: 60000 });
+    await waitForImages(page);
     await page.addStyleTag({
       content: `@page { margin: 0 !important; size: A4 portrait; } html, body { margin: 0 !important; padding: 0 !important; }`,
     });

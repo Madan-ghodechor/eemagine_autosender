@@ -417,6 +417,26 @@
       margin-bottom: 10px;
     }
 
+    /* PAGE 3 - SPONSOR / BRANDING PAGE */
+    .page3 {
+      background-color: #061038 !important;
+      padding: 200px !important;
+    }
+
+    .page3 .pad {
+      height: 100%;
+      width: 100%;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .p3-illustration {
+      width: 100%;
+      display: block;
+    }
+
     @page {
       size: A4;
       margin: 0;
@@ -477,7 +497,7 @@
 
       <!-- HEADER -->
       <div class="top-logos">
-        <img src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/header.svg"
+        <img src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/wow/WOW%20_Hotel%20Voucher%20header-01.svg"
           alt="" width="100%" />
       </div>
 
@@ -490,11 +510,12 @@
 
       <!-- STAGE -->
       <div class="stage">
-        <img class="hotel-bg" src="{{hotelImg}}" alt="">
+        <img class="hotel-bg" src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/wow/Trident_Bandra-01.svg" alt="">
 
         <div class="booking-wrap">
-          <div class="booking-id">Booking ID: {{bookingId}}</div>
-          <div class="booked-on">Booked on: <b>{{bookingDate}}</b></div>
+          <!-- <div class="booking-id">Booking ID: {{bookingId}}</div> -->
+          <div class="booking-id">WOW AWARDS ASIA 2026</div>
+          <!-- <div class="booked-on">Booked on: <b>{{bookingDate}}</b></div> -->
         </div>
 
         <!-- HOTEL BLOCK -->
@@ -502,7 +523,7 @@
           {{#if isITCGrandChola}}
           <div class="hotel-badge">
             <img
-              src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/eemagine/ITC%20grand%20chola.svg"
+              src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/wow/Trident_Bandra_Logo-01.svg"
               alt="" />
           </div>
           {{/if}}
@@ -709,7 +730,7 @@
 
           <h2 class="sec-h" style="margin-top:22px;">Terms &amp; Conditions</h2>
           <p class="tc-p">CoTrav provides a platform to facilitate transactions between agents, clients, users, and
-            customers who are attending EEMAGINE 2026. CoTrav is responsible for:</p>
+            customers who are attending {{eventName}}. CoTrav is responsible for:</p>
           <ul class="policy-list">
             <li>Issuing a valid hotel voucher (accepted by the hotel).</li>
             <li>Offering support in case of cancellations.</li>
@@ -732,6 +753,15 @@
           alt="" />
       </div>
     </div>
+  </div>
+
+  <!-- ===================== PAGE 3 - SPONSOR / BRANDING PAGE ===================== -->
+  <div class="page page3">
+    <div class="pad">
+      <img class="p3-illustration"
+        src="https://aws-taxivaxi-bucket.s3.us-east-2.amazonaws.com/cotravin_assets/Madan/wow/WOW+Final+ILU.png"
+        alt="" />
+    </div><!-- /pad -->
   </div>
 
 </body>
