@@ -7,7 +7,8 @@ const { connectDB } = require('./config/db');
 const voucherRoutes       = require('./routes/voucherRoutes');
 const uploadRoutes        = require('./routes/uploadRoutes');
 const hotelVoucherRoutes  = require('./routes/hotelVoucherRoutes');
-const bookingRoutes       = require('./routes/bookingRoutes');
+const bookingRoutes          = require('./routes/bookingRoutes');
+const inconvenienceRoutes    = require('./routes/inconvenienceRoutes');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/upload',           uploadRoutes);
 app.use('/api/voucher',      voucherRoutes);
 app.use('/vouchers/hotel',   hotelVoucherRoutes);
 app.use('/bookings',         bookingRoutes);
+app.use('/inconvenience',    inconvenienceRoutes);
 
 // Home → upload page
 app.get('/', (req, res) => {

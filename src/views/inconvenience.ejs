@@ -1,0 +1,136 @@
+<%- include('partials/head', { title: 'Send Inconvenience Notice' }) %>
+<%- include('partials/navbar', { page: 'inconvenience' }) %>
+
+<style>
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .form-group input {
+    padding: 9px 12px; border: 1px solid #dde1ea; border-radius: 6px;
+    font-size: 14px; background: #fff; outline: none; transition: border-color .15s;
+  }
+  .form-group input:focus { border-color: var(--primary); }
+  .section-heading {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--primary); border-bottom: 1px solid #e8eaf0; padding-bottom: 8px;
+    margin: 8px 0 4px;
+  }
+  .result-box {
+    margin-top: 20px; padding: 16px 18px; border-radius: 8px;
+    font-size: 13px; line-height: 1.7; display: none;
+  }
+  .result-box.ok  { background: #f0faf4; border: 1px solid #a8d5b5; color: #1e6b3c; }
+  .result-box.err { background: #fff5f5; border: 1px solid #f5b7b1; color: #922b21; }
+  .channel-row { display: flex; gap: 8px; align-items: center; font-size: 13px; }
+  .channel-row .badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; }
+  .badge.ok  { background:#d5f5e3; color:#1e6b3c; }
+  .badge.err { background:#fde8e8; color:#922b21; }
+  .badge.skip { background:#eaeaea; color:#666; }
+</style>
+
+<div class="container" style="max-width:600px">
+  <div style="margin-bottom:4px">
+    <h1 class="page-title">Send Inconvenience Notice</h1>
+  </div>
+  <p class="page-sub">
+    Sends an apology email and/or WhatsApp to the attendee informing them that
+    the earlier booking confirmation was sent in error and their booking is
+    <strong>pending payment</strong>.
+  </p>
+
+  <form id="incForm" class="card" style="padding:28px" novalidate>
+
+    <div class="section-heading">Attendee Details</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Primary Attendee Name <span style="color:#c0392b">*</span></label>
+        <input type="text" id="guestName" placeholder="e.g. Rajesh Kumar" required />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="guest@example.com" />
+      </div>
+      <div class="form-group">
+        <label>WhatsApp Number</label>
+        <input type="text" id="phone" placeholder="+91 98765 43210" />
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:16px;margin-top:24px;flex-wrap:wrap;">
+      <button type="submit" class="btn btn-primary" id="sendBtn">Send Notice</button>
+      <button type="button" class="btn btn-outline" id="resetBtn">Reset</button>
+    </div>
+
+  </form>
+
+  <div id="resultBox" class="result-box"></div>
+</div>
+
+<script>
+  const form        = document.getElementById('incForm');
+  const sendBtn     = document.getElementById('sendBtn');
+  const resultBox   = document.getElementById('resultBox');
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    form.reset();
+    resultBox.style.display = 'none';
+    resultBox.className = 'result-box';
+    resultBox.innerHTML = '';
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    resultBox.style.display = 'none';
+    resultBox.innerHTML = '';
+
+    const guestName = document.getElementById('guestName').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    const phone     = document.getElementById('phone').value.trim();
+
+    if (!guestName) { alert('Attendee name is required.'); return; }
+    if (!email && !phone) { alert('Provide at least an email or WhatsApp number.'); return; }
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch('/inconvenience/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ guestName, email, phone }),
+      });
+
+      const data = await res.json();
+
+      const lines = [];
+      if (data.results?.email) {
+        const r = data.results.email;
+        lines.push(`<div class="channel-row">Email &nbsp;<span class="badge ${r.success ? 'ok' : 'err'}">${r.success ? 'Sent' : 'Failed'}</span>${r.error ? ' — ' + r.error : ''}</div>`);
+      } else if (email) {
+        lines.push(`<div class="channel-row">Email &nbsp;<span class="badge skip">Skipped</span></div>`);
+      }
+
+      if (data.results?.whatsapp) {
+        const r = data.results.whatsapp;
+        lines.push(`<div class="channel-row">WhatsApp &nbsp;<span class="badge ${r.success ? 'ok' : 'err'}">${r.success ? 'Sent' : 'Failed'}</span>${r.error ? ' — ' + r.error : ''}</div>`);
+      } else if (phone) {
+        lines.push(`<div class="channel-row">WhatsApp &nbsp;<span class="badge skip">Skipped</span></div>`);
+      }
+
+      const allOk = Object.values(data.results || {}).every(r => r.success);
+      resultBox.className = `result-box ${allOk ? 'ok' : 'err'}`;
+      resultBox.innerHTML = lines.join('');
+      resultBox.style.display = 'block';
+    } catch (err) {
+      resultBox.className = 'result-box err';
+      resultBox.innerHTML = `Error: ${err.message}`;
+      resultBox.style.display = 'block';
+    } finally {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send Notice';
+    }
+  });
+</script>
+
+<%- include('partials/footer') %>

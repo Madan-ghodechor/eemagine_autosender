@@ -1,0 +1,702 @@
+[{
+  "_id": {
+    "$oid": "6a3f990cd6523b6275b41d1d"
+  },
+  "bookingId": "CT26EEMA0001",
+  "batchId": "1782552844294_lvfcpo",
+  "fileName": "EEMAGINE (1) (1).xlsx",
+  "rowIndex": 0,
+  "data": {
+    "Booking Date": "25 June 2026",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai)\r\nGuindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": "+91 9309804106",
+    "Hotel Support Email": "reservations@itchotels.com",
+    "Hotel Google Location": "https://maps.app.goo.gl/Yw37bL9psbRJfUBZ7",
+    "Room Type": "Single",
+    "Check -In Date": "04 July 2026",
+    "Check-Out Date": "06 July 2026",
+    "Primary Guest Name": "Madan Ghodechor",
+    "Primary Guest Contact": "9309804106",
+    "Primary Guest Email": "madan.ghodechor@cotrav.co",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-27T09:34:04.382Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525d2"
+  },
+  "bookingId": "CT26EEMA0392",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 170,
+  "data": {
+    "Sl. No.": "171",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Vikas Gupta",
+    "Primary Guest Contact": "91 9377033033",
+    "Primary Guest Email": "vikas@booknfly.travel",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.815Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525e1"
+  },
+  "bookingId": "CT26EEMA0407",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 185,
+  "data": {
+    "Sl. No.": "186",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Chirag Vithalani",
+    "Primary Guest Contact": "91 8879831584",
+    "Primary Guest Email": "anchorchiragv@gmail.com",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.816Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525e3"
+  },
+  "bookingId": "CT26EEMA0409",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 187,
+  "data": {
+    "Sl. No.": "188",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Deepak Choudhary",
+    "Primary Guest Contact": "91 9821899753",
+    "Primary Guest Email": "deepak@evalive.in",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.816Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525e5"
+  },
+  "bookingId": "CT26EEMA0411",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 189,
+  "data": {
+    "Sl. No.": "190",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Bobby Elanjical",
+    "Primary Guest Contact": "91 9947322222",
+    "Primary Guest Email": "bobby@weddingfactory.com",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.816Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525e9"
+  },
+  "bookingId": "CT26EEMA0415",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 193,
+  "data": {
+    "Sl. No.": "194",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Vijay Bokaria",
+    "Primary Guest Contact": "91 9831669698",
+    "Primary Guest Email": "vijay@mokshevents.com",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.816Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525ed"
+  },
+  "bookingId": "CT26EEMA0419",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 197,
+  "data": {
+    "Sl. No.": "198",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Manish Jindal",
+    "Primary Guest Contact": "91 9811960301",
+    "Primary Guest Email": "manishkjindal@gmail.com",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.819Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525ee"
+  },
+  "bookingId": "CT26EEMA0420",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 198,
+  "data": {
+    "Sl. No.": "199",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Bhawna Sharma",
+    "Primary Guest Contact": "91 9711294941",
+    "Primary Guest Email": "bhawnadixit41@gmail.com",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.819Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525ef"
+  },
+  "bookingId": "CT26EEMA0421",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 199,
+  "data": {
+    "Sl. No.": "200",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Jai Mundra",
+    "Primary Guest Contact": "91 9840045463",
+    "Primary Guest Email": "jai@gobeep.in",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.819Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525f2"
+  },
+  "bookingId": "CT26EEMA0424",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 202,
+  "data": {
+    "Sl. No.": "203",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Deep Roy",
+    "Primary Guest Contact": "91 9613890300",
+    "Primary Guest Email": "thinkbrandeventsandadvertising@gmail.com",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.819Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525f3"
+  },
+  "bookingId": "CT26EEMA0425",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 203,
+  "data": {
+    "Sl. No.": "204",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Rajesh Varma",
+    "Primary Guest Contact": "91 9810038918",
+    "Primary Guest Email": "rajesh.varma@crievents.com",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.820Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525f6"
+  },
+  "bookingId": "CT26EEMA0428",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 206,
+  "data": {
+    "Sl. No.": "207",
+    "Booking Date": "15th June ",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600034",
+    "Hotel Support Contact": " 84483 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Double",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Kamlesh Jhabakk",
+    "Primary Guest Contact": "91 9840015052",
+    "Primary Guest Email": "kj@gobeep.in",
+    "Secondary Guest Name": "Ashish Kumar Daga",
+    "Secondary Guest Contact": "91 9535572222",
+    "Secondary Guest Email": "ashish@gobeep.in",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.820Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525f9"
+  },
+  "bookingId": "CT26EEMA0431",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 209,
+  "data": {
+    "Sl. No.": "210",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Taranbir Sahni",
+    "Primary Guest Contact": "9431581052",
+    "Primary Guest Email": "taranbir@whitehorseevent.com",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.820Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525fa"
+  },
+  "bookingId": "CT26EEMA0432",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 210,
+  "data": {
+    "Sl. No.": "211",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Sanjoy Roy ",
+    "Primary Guest Contact": "9811054792",
+    "Primary Guest Email": "sanjoy@teamworkarts.com        ",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": ""
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.820Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525fb"
+  },
+  "bookingId": "CT26EEMA0433",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 211,
+  "data": {
+    "Sl. No.": "212",
+    "Booking Date": "27th June",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Double",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Ankur Karla",
+    "Primary Guest Contact": "9810252358",
+    "Primary Guest Email": "ankur@vibgyor.in ",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": "Payment will be done by Monday 29th "
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.820Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525fc"
+  },
+  "bookingId": "CT26EEMA0434",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 212,
+  "data": {
+    "Sl. No.": "213",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Double",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Sonika Chopra",
+    "Primary Guest Contact": "9819349390",
+    "Primary Guest Email": "supahsonix2020@gmail.com",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": "SHE WANT TO CHANGE IT TO 3 DAYS BALANCE PAYMENT PENDING"
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.820Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525fd"
+  },
+  "bookingId": "CT26EEMA0435",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 213,
+  "data": {
+    "Sl. No.": "214",
+    "Booking Date": "15th May",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Double",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "DV Vivek",
+    "Primary Guest Contact": "9840044347",
+    "Primary Guest Email": "vivek@redchariots.com",
+    "Secondary Guest Name": "DV Vivek Guest",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": "Room Payment Pending "
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.820Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525fe"
+  },
+  "bookingId": "CT26EEMA0436",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 214,
+  "data": {
+    "Sl. No.": "215",
+    "Booking Date": "27th June",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Jacob Santosh ",
+    "Primary Guest Contact": "9845286377",
+    "Primary Guest Email": "",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": "Full Payment Pending"
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.820Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa7525ff"
+  },
+  "bookingId": "CT26EEMA0437",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 215,
+  "data": {
+    "Sl. No.": "216",
+    "Booking Date": "27th June",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Jocob Santosh Friend",
+    "Primary Guest Contact": "9845286377",
+    "Primary Guest Email": "",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": "Full Payment Pending"
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.820Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa752600"
+  },
+  "bookingId": "CT26EEMA0438",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 216,
+  "data": {
+    "Sl. No.": "217",
+    "Booking Date": "27th June",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Single",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Shaju Ignatius",
+    "Primary Guest Contact": "9820323399",
+    "Primary Guest Email": "",
+    "Secondary Guest Name": "",
+    "Secondary Guest Contact": "",
+    "Secondary Guest Email": "",
+    "__EMPTY": "Full Payment Pending"
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.821Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa752601"
+  },
+  "bookingId": "CT26EEMA0439",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 217,
+  "data": {
+    "Sl. No.": "218",
+    "Booking Date": "27th June",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600033",
+    "Hotel Support Contact": " 84482 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Double",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Sonu Nanda",
+    "Primary Guest Contact": "9937143343",
+    "Primary Guest Email": "info@thplexperiences.com",
+    "Secondary Guest Name": "Arpita Nanda",
+    "Secondary Guest Contact": "9937459631",
+    "Secondary Guest Email": "editor.titili@gmail.com",
+    "__EMPTY": "Room Payment Pending "
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.821Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a40eb8f3d4c549eaa752602"
+  },
+  "bookingId": "CT26EEMA0440",
+  "batchId": "1782639503786_z9vbqn",
+  "fileName": "EEMAGINE ITC Grand Chola Data  - COTRAV.xlsx",
+  "rowIndex": 218,
+  "data": {
+    "Sl. No.": "219",
+    "Booking Date": "27th June",
+    "Hotel Name": "ITC Grand Chola",
+    "Hotel Address": "No. 63, Mount Road (Anna Salai) Guindy, Chennai, Tamil Nadu 600032",
+    "Hotel Support Contact": " 84481 17413",
+    "Hotel Support Email": "operations@eemaindia.com",
+    "Hotel Google Location": "https://www.google.com/maps/place/13%C2%B000'37.8%22N+80%C2%B013'13.8%22E/@13.0105,80.2205,17z/data=!3m1!4b1!4m4!3m3!8m2!3d13.0105!4d80.2205?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D",
+    "Room Type": "Double",
+    "Check -In Date": "7 Aug 26",
+    "Check-Out Date": "10 Aug 26",
+    "Primary Guest Name": "Avinash Deshmukh",
+    "Primary Guest Contact": "9949489092",
+    "Primary Guest Email": "avinash@eventronicx.com",
+    "Secondary Guest Name": "Anupama Deshmukh",
+    "Secondary Guest Contact": "91 9000006194",
+    "Secondary Guest Email": "anupama@eventronicx.com",
+    "__EMPTY": "Balance Payment Pending for the Difference Amt - booked Employee rate instead of Principal"
+  },
+  "voucherSend": true,
+  "uploadedAt": {
+    "$date": "2026-06-28T09:38:23.821Z"
+  }
+}]
